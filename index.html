@@ -272,12 +272,16 @@ const EVENT = {
 };
 
 /* ---------- Calendar links ---------- */
+// Registry link rides along in the calendar event description when configured
+const calDescription =
+  EVENT.description +
+  (CONFIG.REGISTRY_URL ? "\n\n🎁 Baby registry: " + CONFIG.REGISTRY_URL : "");
 const gcalUrl =
   "https://calendar.google.com/calendar/render?action=TEMPLATE" +
   "&text=" + encodeURIComponent(EVENT.title) +
   "&dates=" + EVENT.startUTC + "/" + EVENT.endUTC +
   "&location=" + encodeURIComponent(EVENT.location) +
-  "&details=" + encodeURIComponent(EVENT.description);
+  "&details=" + encodeURIComponent(calDescription);
 document.getElementById("gcalBtn").href = gcalUrl;
 document.getElementById("gcalBtn2").href = gcalUrl;
 
@@ -286,13 +290,19 @@ const icsContent = [
   "VERSION:2.0",
   "PRODID:-//Baby Nabhan Shower//RSVP Page//EN",
   "BEGIN:VEVENT",
-  "UID:rafael-baby-shower-20260816@rsvp",
+  "UID:baby-nabhan-shower-20260816@rsvp",
   "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, ""),
   "DTSTART:" + EVENT.startUTC,
   "DTEND:" + EVENT.endUTC,
   "SUMMARY:" + EVENT.title,
   "LOCATION:" + EVENT.location.replace(/,/g, "\\,"),
-  "DESCRIPTION:" + EVENT.description.replace(/,/g, "\\,"),
+  "DESCRIPTION:" + calDescription.replace(/,/g, "\\,").replace(/\n/g, "\\n"),
+  // Built-in reminder: fires 1 day before for guests who import the .ics
+  "BEGIN:VALARM",
+  "ACTION:DISPLAY",
+  "DESCRIPTION:Baby Nabhan's Baby Shower is tomorrow — 1:00 PM sharp!",
+  "TRIGGER:-P1D",
+  "END:VALARM",
   "END:VEVENT",
   "END:VCALENDAR",
 ].join("\r\n");
