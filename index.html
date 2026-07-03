@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rafael's Baby Shower — RSVP</title>
+<meta name="description" content="You're invited to Rafael's Baby Shower — Sunday, August 16, 2026 at 1:00 PM, Maggiano's Little Italy, Nashville. RSVP here." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #faf6f0;
+    --ink: #3d4351;
+    --soft-ink: #6b7280;
+    --blue: #7c9cbf;
+    --blue-deep: #4f6d92;
+    --blue-pale: #e8eff6;
+    --gold: #c9a86a;
+    --line: #e5ddd2;
+    --white: #ffffff;
+    --error: #b3564e;
+    --success: #4e7d5b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ---------- Hero ---------- */
+  .hero { text-align: center; padding: 64px 12px 40px; }
+  .hero .eyebrow {
+    font-size: 13px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--blue-deep); font-weight: 600;
+  }
+  .hero h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(44px, 9vw, 68px);
+    font-weight: 500; line-height: 1.1; margin: 14px 0 6px;
+  }
+  .hero .hosts { font-size: 15px; color: var(--soft-ink); margin-top: 10px; }
+  .hero .divider {
+    width: 72px; height: 1px; background: var(--gold);
+    margin: 26px auto; position: relative;
+  }
+  .hero .divider::after {
+    content: "◆"; position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+    color: var(--gold); font-size: 10px; background: var(--cream); padding: 0 8px;
+  }
+  .hero .datetime {
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(22px, 4.5vw, 28px); font-weight: 500;
+  }
+  .hero .sharp { font-size: 15px; color: var(--blue-deep); font-weight: 600; margin-top: 2px; font-family: "Inter", sans-serif; }
+
+  /* ---------- Cards ---------- */
+  .card {
+    background: var(--white); border: 1px solid var(--line); border-radius: 14px;
+    padding: 28px; margin-bottom: 22px;
+    box-shadow: 0 2px 12px rgba(61, 67, 81, 0.04);
+  }
+  .card h2 {
+    font-family: "Cormorant Garamond", serif; font-size: 27px; font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .venue-name { font-weight: 600; font-size: 16px; }
+  .venue-addr { color: var(--soft-ink); font-size: 15px; margin-bottom: 16px; }
+
+  .btn-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 18px; border-radius: 10px; font-size: 14px; font-weight: 600;
+    text-decoration: none; cursor: pointer; border: none; font-family: inherit;
+    transition: transform 0.08s ease, box-shadow 0.15s ease;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary { background: var(--blue-deep); color: #fff; }
+  .btn-primary:hover { box-shadow: 0 4px 14px rgba(79, 109, 146, 0.35); }
+  .btn-outline { background: var(--white); color: var(--blue-deep); border: 1.5px solid var(--blue); }
+  .btn-outline:hover { background: var(--blue-pale); }
+  .btn-gold { background: var(--gold); color: #fff; }
+  .btn-gold:hover { box-shadow: 0 4px 14px rgba(201, 168, 106, 0.4); }
+  .btn[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
+
+  /* ---------- Form ---------- */
+  label { display: block; font-size: 13.5px; font-weight: 600; margin: 16px 0 6px; }
+  label .req { color: var(--error); }
+  input[type="text"], input[type="tel"], input[type="email"], textarea, select {
+    width: 100%; padding: 12px 14px; font-size: 16px; font-family: inherit;
+    border: 1.5px solid var(--line); border-radius: 10px; background: #fdfcfa;
+    color: var(--ink); outline: none; transition: border-color 0.15s ease;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--blue); background: #fff; }
+  textarea { resize: vertical; min-height: 84px; }
+
+  .radio-group { display: flex; flex-direction: column; gap: 10px; margin-top: 8px; }
+  .radio-pill {
+    display: flex; align-items: center; gap: 12px; padding: 13px 16px;
+    border: 1.5px solid var(--line); border-radius: 10px; cursor: pointer;
+    font-size: 15px; background: #fdfcfa; transition: all 0.15s ease;
+  }
+  .radio-pill:has(input:checked) {
+    border-color: var(--blue-deep); background: var(--blue-pale); font-weight: 600;
+  }
+  .radio-pill input { accent-color: var(--blue-deep); width: 18px; height: 18px; }
+
+  /* attendee rows */
+  .attendee-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
+  .attendee-row input { flex: 1 1 auto; min-width: 0; }
+  .attendee-row select { flex: 0 0 132px; width: 132px; }
+  .remove-btn {
+    flex: 0 0 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--line);
+    background: #fff; color: var(--soft-ink); font-size: 17px; cursor: pointer; line-height: 1;
+  }
+  .remove-btn:hover { border-color: var(--error); color: var(--error); }
+  .add-attendee {
+    background: none; border: 1.5px dashed var(--blue); color: var(--blue-deep);
+    padding: 10px 16px; border-radius: 10px; font-size: 14px; font-weight: 600;
+    cursor: pointer; font-family: inherit; width: 100%; margin-top: 4px;
+  }
+  .add-attendee:hover { background: var(--blue-pale); }
+  .hint { font-size: 12.5px; color: var(--soft-ink); margin-top: 4px; }
+
+  .tally {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; font-size: 13px;
+  }
+  .tally span {
+    background: var(--blue-pale); color: var(--blue-deep);
+    padding: 5px 12px; border-radius: 999px; font-weight: 600;
+  }
+
+  .submit-btn {
+    width: 100%; margin-top: 26px; padding: 15px; font-size: 16px;
+  }
+  .form-msg { margin-top: 14px; font-size: 14.5px; display: none; }
+  .form-msg.error { display: block; color: var(--error); }
+
+  /* success state */
+  .success-panel { text-align: center; padding: 26px 8px; display: none; }
+  .success-panel .big { font-size: 44px; }
+  .success-panel h3 {
+    font-family: "Cormorant Garamond", serif; font-size: 30px; font-weight: 600; margin: 10px 0 6px;
+  }
+  .success-panel p { color: var(--soft-ink); font-size: 15px; }
+
+  footer { text-align: center; color: var(--soft-ink); font-size: 13px; margin-top: 40px; }
+  footer .heart { color: var(--blue); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <div class="eyebrow">You're Invited To</div>
+    <h1>Rafael's<br />Baby&nbsp;Shower</h1>
+    <div class="hosts">Hosted by Peter Nabhan &amp; Odette Abou Ghanem</div>
+    <div class="divider"></div>
+    <div class="datetime">Sunday, August 16, 2026 · 1:00 PM</div>
+    <div class="sharp">Kick-off is at 1:00 PM sharp — please arrive on time!</div>
+  </header>
+
+  <!-- ================= WHERE ================= -->
+  <section class="card">
+    <h2>Where</h2>
+    <div class="venue-name">Maggiano's Little Italy</div>
+    <div class="venue-addr">3106 West End Ave, Nashville, TN 37203</div>
+    <div class="btn-row">
+      <a class="btn btn-outline" target="_blank" rel="noopener"
+         href="https://maps.google.com/?q=Maggiano%27s+Little+Italy%2C+3106+West+End+Ave%2C+Nashville%2C+TN+37203">
+        📍 Get Directions
+      </a>
+      <a class="btn btn-primary" id="gcalBtn" target="_blank" rel="noopener" href="#">
+        🗓 Add to Google Calendar
+      </a>
+      <a class="btn btn-outline" id="icsBtn" href="#">
+        🍎 Apple / Outlook (.ics)
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= REGISTRY ================= -->
+  <section class="card" style="text-align:center;">
+    <h2>Baby Registry</h2>
+    <p style="color:var(--soft-ink); font-size:15px; margin-bottom:16px;">
+      Your presence is the greatest gift — but if you'd like to spoil Rafael,
+      you can find our registry here.
+    </p>
+    <a class="btn btn-gold" id="registryBtn" target="_blank" rel="noopener" href="#">
+      🎁 View Our Registry
+    </a>
+  </section>
+
+  <!-- ================= RSVP ================= -->
+  <section class="card" id="rsvpCard">
+    <h2>RSVP</h2>
+    <p style="color:var(--soft-ink); font-size:14.5px;">
+      Kindly respond by <strong>August 1, 2026</strong>.
+    </p>
+
+    <form id="rsvpForm" novalidate>
+      <label for="fullName">Your Name <span class="req">*</span></label>
+      <input type="text" id="fullName" name="name" autocomplete="name" placeholder="First &amp; last name" required />
+
+      <label for="phone">Phone Number <span class="req">*</span></label>
+      <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(615) 555-1234" required />
+
+      <label for="email">Email <span class="req">*</span></label>
+      <input type="email" id="email" name="email" autocomplete="email" placeholder="you@example.com" required />
+
+      <label>Will you be joining us? <span class="req">*</span></label>
+      <div class="radio-group">
+        <label class="radio-pill"><input type="radio" name="attending" value="Yes" /> 🎉 Joyfully accept</label>
+        <label class="radio-pill"><input type="radio" name="attending" value="Maybe" /> 🤔 Not sure yet</label>
+        <label class="radio-pill"><input type="radio" name="attending" value="No" /> 😢 Regretfully decline</label>
+      </div>
+
+      <div id="attendeeSection">
+        <label style="margin-top:22px;">Who's coming with you?</label>
+        <p class="hint" style="margin-bottom:10px;">List everyone attending — including yourself — and pick an age group for each.</p>
+        <div id="attendeeRows"></div>
+        <button type="button" class="add-attendee" id="addAttendee">＋ Add another attendee</button>
+        <div class="tally" id="tally"></div>
+      </div>
+
+      <label for="notes">Anything we should know?</label>
+      <textarea id="notes" name="notes" placeholder="Allergies, questions, a note for the parents-to-be…"></textarea>
+
+      <button type="submit" class="btn btn-primary submit-btn" id="submitBtn">Send RSVP 💌</button>
+      <div class="form-msg" id="formMsg"></div>
+    </form>
+
+    <div class="success-panel" id="successPanel">
+      <div class="big">💙</div>
+      <h3 id="successTitle">Thank you!</h3>
+      <p id="successText">Your RSVP has been received. We can't wait to celebrate with you!</p>
+      <p style="margin-top:14px;">
+        <a class="btn btn-primary" id="gcalBtn2" target="_blank" rel="noopener" href="#">🗓 Add it to your calendar</a>
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    Made with <span class="heart">♥</span> for Baby Rafael · August 16, 2026 · Nashville, TN
+  </footer>
+</div>
+
+<script>
+/* =====================================================================
+   CONFIG — the only two values that ever need editing
+   ===================================================================== */
+const CONFIG = {
+  // Google Apps Script Web App URL (receives RSVP submissions)
+  SCRIPT_URL: "",
+  // Baby registry link
+  REGISTRY_URL: "",
+};
+
+/* ---------- Event constants ---------- */
+const EVENT = {
+  title: "Rafael's Baby Shower",
+  // 1:00–4:00 PM Central (CDT = UTC-5 in August)
+  startUTC: "20260816T180000Z",
+  endUTC: "20260816T210000Z",
+  location: "Maggiano's Little Italy, 3106 West End Ave, Nashville, TN 37203",
+  description: "Join Peter Nabhan & Odette Abou Ghanem to celebrate Baby Rafael! Starts at 1:00 PM sharp.",
+};
+
+/* ---------- Calendar links ---------- */
+const gcalUrl =
+  "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+  "&text=" + encodeURIComponent(EVENT.title) +
+  "&dates=" + EVENT.startUTC + "/" + EVENT.endUTC +
+  "&location=" + encodeURIComponent(EVENT.location) +
+  "&details=" + encodeURIComponent(EVENT.description);
+document.getElementById("gcalBtn").href = gcalUrl;
+document.getElementById("gcalBtn2").href = gcalUrl;
+
+const icsContent = [
+  "BEGIN:VCALENDAR",
+  "VERSION:2.0",
+  "PRODID:-//Rafael Baby Shower//RSVP Page//EN",
+  "BEGIN:VEVENT",
+  "UID:rafael-baby-shower-20260816@rsvp",
+  "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, ""),
+  "DTSTART:" + EVENT.startUTC,
+  "DTEND:" + EVENT.endUTC,
+  "SUMMARY:" + EVENT.title,
+  "LOCATION:" + EVENT.location.replace(/,/g, "\\,"),
+  "DESCRIPTION:" + EVENT.description.replace(/,/g, "\\,"),
+  "END:VEVENT",
+  "END:VCALENDAR",
+].join("\r\n");
+const icsBtn = document.getElementById("icsBtn");
+icsBtn.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(icsContent);
+icsBtn.download = "Rafaels-Baby-Shower.ics";
+
+/* ---------- Registry button ---------- */
+const registryBtn = document.getElementById("registryBtn");
+if (CONFIG.REGISTRY_URL) {
+  registryBtn.href = CONFIG.REGISTRY_URL;
+} else {
+  registryBtn.textContent = "🎁 Registry link coming soon";
+  registryBtn.setAttribute("aria-disabled", "true");
+}
+
+/* ---------- Attendee rows ---------- */
+const AGE_GROUPS = ["12+ (Adult)", "5–12", "Under 5"];
+const rowsEl = document.getElementById("attendeeRows");
+
+function addRow(name = "") {
+  const row = document.createElement("div");
+  row.className = "attendee-row";
+  row.innerHTML =
+    '<input type="text" placeholder="Attendee name" value="' + name.replace(/"/g, "&quot;") + '" aria-label="Attendee name" />' +
+    '<select aria-label="Age group">' +
+    AGE_GROUPS.map((g) => "<option>" + g + "</option>").join("") +
+    "</select>" +
+    '<button type="button" class="remove-btn" aria-label="Remove attendee">×</button>';
+  row.querySelector(".remove-btn").addEventListener("click", () => {
+    row.remove();
+    updateTally();
+  });
+  row.querySelector("select").addEventListener("change", updateTally);
+  row.querySelector("input").addEventListener("input", updateTally);
+  rowsEl.appendChild(row);
+  updateTally();
+}
+
+function getAttendees() {
+  return [...rowsEl.querySelectorAll(".attendee-row")]
+    .map((r) => ({
+      name: r.querySelector("input").value.trim(),
+      age: r.querySelector("select").value,
+    }))
+    .filter((a) => a.name);
+}
+
+function counts() {
+  const a = getAttendees();
+  return {
+    adults: a.filter((x) => x.age === AGE_GROUPS[0]).length,
+    kids512: a.filter((x) => x.age === AGE_GROUPS[1]).length,
+    under5: a.filter((x) => x.age === AGE_GROUPS[2]).length,
+    total: a.length,
+  };
+}
+
+function updateTally() {
+  const c = counts();
+  document.getElementById("tally").innerHTML = c.total
+    ? "<span>Adults / 12+: " + c.adults + "</span>" +
+      "<span>Kids 5–12: " + c.kids512 + "</span>" +
+      "<span>Under 5: " + c.under5 + "</span>" +
+      "<span>Total: " + c.total + "</span>"
+    : "";
+}
+
+document.getElementById("addAttendee").addEventListener("click", () => addRow());
+addRow(); // start with one empty row
+
+// Pre-fill first attendee from the name field as a convenience
+document.getElementById("fullName").addEventListener("change", (e) => {
+  const first = rowsEl.querySelector(".attendee-row input");
+  if (first && !first.value.trim()) {
+    first.value = e.target.value.trim();
+    updateTally();
+  }
+});
+
+// Hide attendee section when declining
+document.querySelectorAll('input[name="attending"]').forEach((r) =>
+  r.addEventListener("change", () => {
+    document.getElementById("attendeeSection").style.display =
+      r.value === "No" && r.checked ? "none" : "";
+  })
+);
+
+/* ---------- Submit ---------- */
+const form = document.getElementById("rsvpForm");
+const msgEl = document.getElementById("formMsg");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  msgEl.className = "form-msg";
+  msgEl.textContent = "";
+
+  const name = document.getElementById("fullName").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const attending = (form.querySelector('input[name="attending"]:checked') || {}).value;
+
+  if (!name || !phone || !email || !attending) {
+    msgEl.textContent = "Please fill in your name, phone, email, and whether you're attending.";
+    msgEl.className = "form-msg error";
+    return;
+  }
+  if (attending !== "No" && getAttendees().length === 0) {
+    msgEl.textContent = "Please add at least one attendee (you count!).";
+    msgEl.className = "form-msg error";
+    return;
+  }
+  if (!CONFIG.SCRIPT_URL) {
+    msgEl.textContent = "RSVP submissions aren't connected yet — please check back shortly.";
+    msgEl.className = "form-msg error";
+    return;
+  }
+
+  const c = counts();
+  const data = new URLSearchParams({
+    name,
+    phone,
+    email,
+    attending,
+    adults: c.adults,
+    kids5to12: c.kids512,
+    under5: c.under5,
+    total: c.total,
+    attendees: getAttendees().map((a) => a.name + " (" + a.age + ")").join("; "),
+    notes: document.getElementById("notes").value.trim(),
+  });
+
+  const btn = document.getElementById("submitBtn");
+  btn.disabled = true;
+  btn.textContent = "Sending…";
+
+  try {
+    // Apps Script web apps don't return CORS headers, so we fire-and-forget.
+    await fetch(CONFIG.SCRIPT_URL, { method: "POST", mode: "no-cors", body: data });
+    form.style.display = "none";
+    const panel = document.getElementById("successPanel");
+    if (attending === "No") {
+      document.getElementById("successTitle").textContent = "We'll miss you!";
+      document.getElementById("successText").textContent =
+        "Thanks for letting us know — you'll be in our hearts on the big day.";
+      document.getElementById("gcalBtn2").style.display = "none";
+    }
+    panel.style.display = "block";
+    panel.scrollIntoView({ behavior: "smooth", block: "center" });
+  } catch (err) {
+    msgEl.textContent = "Something went wrong sending your RSVP. Please try again, or text us directly.";
+    msgEl.className = "form-msg error";
+    btn.disabled = false;
+    btn.textContent = "Send RSVP 💌";
+  }
+});
+</script>
+</body>
+</html>
