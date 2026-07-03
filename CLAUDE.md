@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-RSVP site for Rafael's Baby Shower (Sunday, August 16, 2026, 1:00 PM, Maggiano's Little Italy, Nashville). Two deployable pieces that live in one repo but deploy to different places:
+RSVP site for Baby Nabhan's Baby Shower (Sunday, August 16, 2026, 1:00 PM, Maggiano's Little Italy, Nashville). Two deployable pieces that live in one repo but deploy to different places:
 
-- `index.html` — the entire site: markup, styles, and JS in one file, no build step, no dependencies. Deployed via **GitHub Pages**: pushing to `main` of `Pnabhan/rafaels-baby-shower` publishes to **https://pnabhan.github.io/rafaels-baby-shower/** (takes ~1 minute; verify with a curl for the changed content).
+- `index.html` — the entire site: markup, styles, and JS in one file, no build step, no dependencies. Deployed via **GitHub Pages**: pushing to `main` of `Pnabhan/baby-nabhan-shower` publishes to **https://pnabhan.github.io/baby-nabhan-shower/** (takes ~1 minute; verify with a curl for the changed content).
 - `apps-script/Code.gs` — the form backend. It is **not** deployed from this repo: it is pasted into the Google Apps Script editor attached to the **Baby_Shower_Tracker_Aug16_UPDATED** Google Sheet (owned by peternabhan1@gmail.com) and deployed there as a Web App (Execute as Me / access Anyone). Editing `Code.gs` here does nothing until it's re-pasted and re-deployed in the Apps Script editor.
 
 ## Development

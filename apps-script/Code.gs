@@ -1,5 +1,5 @@
 /**
- * Rafael's Baby Shower — RSVP receiver
+ * Baby Nabhan's Baby Shower — RSVP receiver
  *
  * Attach this script to the "Baby_Shower_Tracker_Aug16_UPDATED" spreadsheet
  * (Extensions → Apps Script), then deploy as a Web App:
@@ -80,6 +80,6 @@ function doPost(e) {
 /** Health check — visiting the web app URL in a browser shows this. */
 function doGet() {
   return ContentService.createTextOutput(
-    "Rafael's Baby Shower RSVP endpoint is live. 💙"
+    "Baby Nabhan's Baby Shower RSVP endpoint is live. 💙"
   );
 }

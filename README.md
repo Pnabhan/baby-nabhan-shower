@@ -1,6 +1,6 @@
-# Rafael's Baby Shower — RSVP Site
+# Baby Nabhan's Baby Shower — RSVP Site
 
-A single-page RSVP website for Rafael's Baby Shower.
+A single-page RSVP website for Baby Nabhan's Baby Shower.
 
 **Event:** Sunday, August 16, 2026 · 1:00 PM sharp
 **Venue:** Maggiano's Little Italy, 3106 West End Ave, Nashville, TN 37203
