@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "rsvp-site",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8642", "--directory", "C:/Users/peter/Projects/rafaels-baby-shower"],
+      "port": 8642
+    }
+  ]
+}
