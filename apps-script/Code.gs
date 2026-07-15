@@ -14,6 +14,10 @@
 var SHEET_NAME = "RSVP Responses";
 var NOTIFY_EMAIL = "peternabhan1@gmail.com"; // set to "" to disable email alerts
 
+// Live destination: Baby_Shower_Tracker_MASTER. The script stays attached to
+// the old Aug16_UPDATED sheet, but all writes go to MASTER by ID.
+var MASTER_SPREADSHEET_ID = "1jlj_LAgBqhz8TIBb9EXFgviA6p3_6_eoXv40irrGxF8";
+
 var EVENT = {
   title: "Baby Boy Nabhan's Shower",
   startUTC: "20260816T180000Z", // 1:00 PM CDT
@@ -33,7 +37,7 @@ function doPost(e) {
   lock.tryLock(10000); // serialize concurrent submissions
 
   try {
-    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var ss = SpreadsheetApp.openById(MASTER_SPREADSHEET_ID);
     var sheet = ss.getSheetByName(SHEET_NAME);
     if (!sheet) {
       sheet = ss.insertSheet(SHEET_NAME);
